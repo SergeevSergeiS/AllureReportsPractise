@@ -32,7 +32,7 @@ public class SelenideTest {
 
         $(linkText(searchTask)).click();
         $(partialLinkText("Issues")).click();
-        $(withText("#3")).should(Condition.visible);
+        $(withText("#2")).should(Condition.visible); //this test not gonna pass
     }
 }
 

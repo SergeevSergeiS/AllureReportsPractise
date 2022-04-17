@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 public class SelenideTestWithAnnotations {
     private static final String searchTask = "SergeevSergeiS/qa_guru_12_1_git";
-    private static final int issueNumber = 2; //this test going to fail
+    private static final int issueNumber = 3;
     private static final String baseUrl = "https://github.com";
 
     @Test
