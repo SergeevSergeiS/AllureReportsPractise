@@ -1,11 +1,17 @@
 package ru.internet.sergeevss90.tests;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.Allure;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebDriver;
+
+import java.nio.charset.StandardCharsets;
 
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
@@ -18,6 +24,7 @@ public class SelenideTestWithLambda {
 
     SelenideElement search = $(".header-search-input");
     private static final String searchTask = "SergeevSergeiS/qa_guru_12_1_git";
+    private static final String issueNumber = "#3";
 
     @BeforeAll
     static void prepare() {
@@ -29,17 +36,27 @@ public class SelenideTestWithLambda {
 
     @Test
     public void testGithubIssue() {
-        step("Открываем главную страницу:" + Configuration.baseUrl, () -> {
-            open("");
+        SelenideLogger.addListener("allure", new AllureSelenide());
+        step("Открываем главную страницу:" + Configuration.baseUrl, () -> open(""));
+
+        step("Ищем репозиторий:" + searchTask, () -> {
+            search.click();
+            search.sendKeys(searchTask);
+            search.submit();
         });
 
+        step("Переходим по ссылке репозитория:" + searchTask, () -> $(linkText(searchTask)).click());
 
-        search.click();
-        search.sendKeys(searchTask);
-        search.submit();
+        step("Переходим на вкладку Issues", () -> $(partialLinkText("Issues")).click());
 
-        $(linkText(searchTask)).click();
-        $(partialLinkText("Issues")).click();
-        $(withText("#2")).click();
+        step("Проверяем, что существует Issue с номером " + issueNumber, () -> {
+            $(withText(issueNumber)).should(Condition.visible);
+            Allure.getLifecycle().addAttachment(
+                    "Исходники страницы",
+                    "text/html",
+                    "html",
+                    WebDriverRunner.getWebDriver().getPageSource().getBytes(StandardCharsets.UTF_8)
+            );
+        });
     }
 }

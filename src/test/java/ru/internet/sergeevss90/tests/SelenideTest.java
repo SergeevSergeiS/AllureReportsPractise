@@ -11,7 +11,7 @@ import static com.codeborne.selenide.Selenide.open;
 import static org.openqa.selenium.By.linkText;
 import static org.openqa.selenium.By.partialLinkText;
 
-public class SelenideTestWithListener {
+public class SelenideTest {
 
     SelenideElement search = $(".header-search-input");
     String searchTask = "SergeevSergeiS/qa_guru_12_1_git";
@@ -24,7 +24,6 @@ public class SelenideTestWithListener {
 
     @Test
     public void testGithubIssue() {
-        SelenideLogger.addListener("allure", new AllureSelenide());
         open("");
 
         search.click();
@@ -36,4 +35,5 @@ public class SelenideTestWithListener {
         $(withText("#3")).should(Condition.visible);
     }
 }
+
 
