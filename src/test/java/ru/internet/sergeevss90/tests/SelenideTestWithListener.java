@@ -28,7 +28,7 @@ public class SelenideTestWithListener {
         open("");
 
         search.click();
-        search.sendKeys(searchTask);
+        search.setValue(searchTask);
         search.submit();
 
         $(linkText(searchTask)).click();

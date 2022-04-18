@@ -41,7 +41,7 @@ public class SelenideTestWithLambda {
 
         step("Ищем репозиторий:" + searchTask, () -> {
             search.click();
-            search.sendKeys(searchTask);
+            search.setValue(searchTask);
             search.submit();
         });
 

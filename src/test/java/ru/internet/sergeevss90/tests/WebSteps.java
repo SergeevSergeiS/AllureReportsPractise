@@ -32,7 +32,7 @@ public class WebSteps {
     @Step("Ищем репозиторий: {searchTask}")
     public void searchForRepository(String searchTask) {
         search.click();
-        search.sendKeys(searchTask);
+        search.setValue(searchTask);
         search.submit();
     }
 
